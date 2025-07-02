@@ -26,6 +26,17 @@ CREATE TABLE memberships (
     UNIQUE (user_id, lounge_id)
 );
 
+-- Enable RLS on memberships
+ALTER TABLE memberships ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Only allow insert if user_id = auth.uid()
+CREATE POLICY "Allow user to join lounge" ON memberships
+  FOR INSERT USING (user_id = auth.uid());
+
+-- Policy: Only allow delete if user_id = auth.uid()
+CREATE POLICY "Allow user to leave lounge" ON memberships
+  FOR DELETE USING (user_id = auth.uid());
+
 -- Seed lounges
 INSERT INTO lounges (slug, title, image_url, description) VALUES
     ('tech-talk', 'Tech Talk', 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6', 'A lounge for tech enthusiasts to discuss the latest in technology.'),
