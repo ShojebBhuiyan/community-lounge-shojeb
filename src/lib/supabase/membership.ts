@@ -1,25 +1,26 @@
 import { getServerSupabaseClient } from "./client";
+import { getUser } from "./user";
 
-export async function insertMembership(userId: string, loungeId: string) {
-  const supabase = getServerSupabaseClient();
-  const { error } = await supabase.from("memberships").insert({
-    user_id: userId,
-    lounge_id: loungeId,
-  });
-  if (error) {
-    return { error: error.message };
-  }
-  return { success: true };
+export async function getLoungesWithMembershipAndCounts() {
+  const supabase = await getServerSupabaseClient();
+  
+  const { data } = await supabase.rpc('get_lounges_with_user_membership');
+  console.log("data", data);
+  return { lounges: data };
 }
 
-export async function deleteMembership(userId: string, loungeId: string) {
-  const supabase = getServerSupabaseClient();
-  const { error } = await supabase
-    .from("memberships")
-    .delete()
-    .match({ user_id: userId, lounge_id: loungeId });
-  if (error) {
-    return { error: error.message };
-  }
-  return { success: true };
-} 
+export async function getUserMemberships() {
+  const supabase = await getServerSupabaseClient();
+  const { data } = await supabase.rpc('get_my_lounges');
+
+  console.log("data", data);
+  return data;
+}
+
+export async function getLoungeBySlug(slug: string) {
+  const supabase = await getServerSupabaseClient();
+  const { data } = await supabase.rpc("get_lounge_by_slug", {
+    slug: slug,
+  });
+  return data;
+}
