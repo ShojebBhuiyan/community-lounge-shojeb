@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -40,10 +41,6 @@ function LoungeCard({
 }: LoungeCardProps) {
   const router = useRouter();
 
-  function handleCardClick() {
-    router.push(`/lounges/${slug}`);
-  }
-
   function handleButtonClick(event: React.MouseEvent) {
     event.stopPropagation(); // Prevent card click when button is clicked
     if (disabled) return;
@@ -53,7 +50,7 @@ function LoungeCard({
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      handleCardClick();
+      router.push(`/lounges/${slug}`);
     }
   }
 
@@ -82,49 +79,50 @@ function LoungeCard({
       aria-label={`Lounge card for ${title}. Click to view details.`}
       role="button"
       onKeyDown={handleKeyDown}
-      onClick={handleCardClick}
     >
-      <div className={`relative ${imageClass} w-full`}>
-        {isCondensed ? (
-          <Image
-            src={imageUrl}
-            alt={`${title} lounge image`}
-            width={imageSize}
-            height={imageSize}
-            className="rounded-md object-cover"
-            sizes="64px"
-            priority={variant === "default"}
-          />
-        ) : (
-          <Image
-            src={imageUrl}
-            alt={`${title} lounge image`}
-            fill
-            className="rounded-md object-cover"
-            sizes={
-              isDialog
-                ? "(max-width: 768px) 100vw, 600px"
-                : "(max-width: 768px) 100vw, 400px"
-            }
-            priority={variant === "default"}
-          />
-        )}
-      </div>
-
-      <div className="flex flex-col w-full mt-2">
-        <div className="flex items-center justify-between w-full">
-          <span className={`font-semibold ${titleSize}`}>{title}</span>
-          <Badge className="ml-2" aria-label={`${memberCount} members`}>
-            {memberCount}
-          </Badge>
+      <Link href={`/lounges/${slug}`} prefetch={true} className="block">
+        <div className={`relative ${imageClass} w-full`}>
+          {isCondensed ? (
+            <Image
+              src={imageUrl}
+              alt={`${title} lounge image`}
+              width={imageSize}
+              height={imageSize}
+              className="rounded-md object-cover"
+              sizes="64px"
+              priority={variant === "default"}
+            />
+          ) : (
+            <Image
+              src={imageUrl}
+              alt={`${title} lounge image`}
+              fill
+              className="rounded-md object-cover"
+              sizes={
+                isDialog
+                  ? "(max-width: 768px) 100vw, 600px"
+                  : "(max-width: 768px) 100vw, 400px"
+              }
+              priority={variant === "default"}
+            />
+          )}
         </div>
 
-        {description && (
-          <p className={`text-gray-600 mt-2 ${descriptionSize} line-clamp-2`}>
-            {description}
-          </p>
-        )}
-      </div>
+        <div className="flex flex-col w-full mt-2">
+          <div className="flex items-center justify-between w-full">
+            <span className={`font-semibold ${titleSize}`}>{title}</span>
+            <Badge className="ml-2" aria-label={`${memberCount} members`}>
+              {memberCount}
+            </Badge>
+          </div>
+
+          {description && (
+            <p className={`text-gray-600 mt-2 ${descriptionSize} line-clamp-2`}>
+              {description}
+            </p>
+          )}
+        </div>
+      </Link>
 
       <Button
         onClick={handleButtonClick}

@@ -4,15 +4,15 @@ import { Suspense } from "react";
 
 export const revalidate = 600; // ISR: 10 minutes
 
-function LoungesGridSkeleton() {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="bg-gray-200 rounded-lg h-64 animate-pulse" />
-      ))}
-    </div>
-  );
-}
+// function LoungesGridSkeleton() {
+//   return (
+//     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+//       {Array.from({ length: 6 }).map((_, i) => (
+//         <div key={i} className="bg-gray-200 rounded-lg h-64 animate-pulse" />
+//       ))}
+//     </div>
+//   );
+// }
 
 export default async function LoungesPage() {
   // Fetch lounges with membership status
@@ -37,9 +37,9 @@ export default async function LoungesPage() {
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           Explore Lounges
         </h2>
-        <Suspense fallback={<LoungesGridSkeleton />}>
-          <LoungesGridClient lounges={lounges || []} />
-        </Suspense>
+        {/* <Suspense fallback={<LoungesGridSkeleton />}> */}
+        <LoungesGridClient lounges={lounges || []} />
+        {/* </Suspense> */}
       </section>
     </main>
   );
