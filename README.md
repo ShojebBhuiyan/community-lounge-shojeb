@@ -1,6 +1,6 @@
 # Community Lounges
 
-A fullstack community app built with Next.js 14, Supabase, and TypeScript. Users can discover, join, and connect with like-minded people in curated lounges.
+A fullstack community app built with Next.js 15, Supabase, and TypeScript. Users can discover, join, and connect with like-minded people in curated lounges.
 
 ## 🚀 Features
 
@@ -150,7 +150,7 @@ memberships
 
 ![Lighthouse Performance](https://via.placeholder.com/400x200/4CAF50/FFFFFF?text=Lighthouse+Score:+95)
 
-- **Performance**: 94/100
+- **Performance**: 98/100
 - **Accessibility**: 100/100
 - **Best Practices**: 100/100
 - **SEO**: 100/100
